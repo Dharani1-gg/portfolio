@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharani G | AI & Data Science Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- General Setup & Variables --- */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #343a40;
+            --background-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --gradient-border: conic-gradient(from 0deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #4dabf7;
+            --secondary-color: #f8f9fa;
+            --background-color: #212529;
+            --text-color: #f8f9fa;
+            --card-bg-color: #343a40;
+            --border-color: #495057;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* --- Page Loader --- */
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--card-bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease-out;
+        }
+        #page-loader.fade-out {
+            opacity: 0;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--border-color);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: var(--secondary-color);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            background-color: var(--card-bg-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .navbar .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .navbar .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .navbar .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0,123,255,0.1) 0%, rgba(0,0,0,0) 100%);
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        /* --- Animated Profile Image --- */
+        .profile-img-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            padding: 4px; /* Space for the gradient border */
+            background: var(--gradient-border);
+            animation: rotate 4s linear infinite;
+        }
+
+        .profile-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--card-bg-color);
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        /* --- Hero Section Animations --- */
+        .animate-on-load {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, filter 1s ease-out, transform 1s ease-out;
+        }
+        .animate-on-load.show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+        .animate-on-load.delay-1 { transition-delay: 0.2s; }
+        .animate-on-load.delay-2 { transition-delay: 0.4s; }
+        .animate-on-load.delay-3 { transition-delay: 0.6s; }
+        .animate-on-load.delay-4 { transition-delay: 0.8s; }
+
+        /* --- Sections --- */
+        .section-content {
+            background-color: var(--card-bg-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Skills Section (now in Projects location) --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-category {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+        .skill-category h3 {
+            color: var(--primary-color);
+        }
+        .skill-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .skill-category ul li {
+            padding: 0.5rem 0;
+        }
+
+        /* --- Animated Skill Bars --- */
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+        .skill-bar {
+            background-color: var(--border-color);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), #8a2be2);
+            border-radius: 10px;
+            width: 0;
+            transition: width 2s ease-out;
+        }
+
+        /* --- Education & Contact Section --- */
+        .edu-contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .contact-info a {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info i {
+            width: 20px;
+            color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+        }
+        footer .social-links {
+            margin-top: 1rem;
+        }
+        footer .social-links a {
+            color: var(--background-color);
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        footer .social-links a:hover {
+            transform: translateY(-5px);
+        }
+
+        /* --- Back to Top Button --- */
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Fade In Animation on Scroll --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+
+            .navbar .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--card-bg-color);
+                flex-direction: column;
+                justify-content: start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: right 0.3s ease-in-out;
+            }
+            .navbar .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .edu-contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="#hero" class="logo">Dharani G</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#education-contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container hero-content">
+                <div class="profile-img-wrapper animate-on-load delay-1">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop" alt="Professional workspace with code on monitor">
+                </div>
+                <h1 class="animate-on-load delay-2">Dharani G</h1>
+                <p class="animate-on-load delay-3">Aspiring AI & Data Science Engineer | C Programmer | Creative Problem Solver</p>
+                <p class="animate-on-load delay-4">A passionate undergraduate at <strong>Ramakrishna Engineering College</strong>, blending robust C programming, thoughtful design, and clear communication to build intelligent solutions.</p>
+                <a href="#projects" class="btn animate-on-load delay-4">View My Skills</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="section-content fade-in">
+                    <p>My academic journey at Ramakrishna Engineering College has provided me with a strong foundation in AI, machine learning, and data science. I believe that great technology is built at the intersection of robust code, thoughtful design, and clear communication.</p>
+                    <br>
+                    <p>This belief drives my passion for system-level thinking with <strong>C programming</strong>, creating intuitive user <strong>designs</strong>, and articulating complex ideas through effective <strong>communication</strong>. This portfolio is a collection of my work, reflecting my skills and my enthusiasm for the world of AI and Data Science.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section (moved to replace Projects) -->
+        <section id="projects">
+            <div class="container">
+                <h2>Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category fade-in">
+                        <h3><i class="fas fa-code"></i> Programming</h3>
+                        <ul>
+                            <li>
+                                <div class="skill-name"><span>C</span><span>95%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="95"></div></div>
+                            </li>
+                            <li>
+                                <div class="skill-name"><span>Python</span><span>90%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="90"></div></div>
+                            </li>
+                            <li>
+                                <div class="skill-name"><span>SQL</span><span>80%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="80"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="skill-category fade-in">
+                        <h3><i class="fas fa-brain"></i> AI & Data Science</h3>
+                        <ul>
+                            <li>
+                                <div class="skill-name"><span>Scikit-learn</span><span>85%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="85"></div></div>
+                            </li>
+                            <li>
+                                <div class="skill-name"><span>TensorFlow</span><span>75%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="75"></div></div>
+                            </li>
+                            <li>
+                                <div class="skill-name"><span>Pandas & NumPy</span><span>90%</span></div>
+                                <div class="skill-bar"><div class="skill-level" data-level="90"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="skill-category fade-in">
+                        <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+                        <ul>
+                            <li>Git & GitHub</li>
+                            <li>Jupyter Notebook</li>
+                            <li>VS Code</li>
+                            <li>Docker</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category fade-in">
+                        <h3><i class="fas fa-palette"></i> Designing & Communication</h3>
+                        <ul>
+                            <li>UI/UX Principles</li>
+                            <li>Figma & Canva</li>
+                            <li>Technical Writing</li>
+                            <li>Public Speaking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications">
+            <div class="container">
+                <h2>Continuous Learning</h2>
+                <div class="section-content fade-in">
+                    <h3>Certifications</h3>
+                    <ul>
+                        <li><strong>Google Data Analytics Professional Certificate</strong> - Coursera</li>
+                        <li><strong>AWS Certified Cloud Practitioner</strong> - Amazon Web Services</li>
+                        <li><strong>Introduction to TensorFlow for AI</strong> - deeplearning.ai</li>
+                    </ul>
+                    <br>
+                    <h3>Workshops & Seminars Attended</h3>
+                    <ul>
+                        <li><strong>Workshop on "Deep Learning with TensorFlow"</strong> - RKEC</li>
+                        <li><strong>Seminar on "Ethics in Artificial Intelligence"</strong> - Guest Lecture</li>
+                        <li><strong>Hands-on Workshop on "Git & GitHub"</strong> - [Organizing Body]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Contact Section -->
+        <section id="education-contact">
+            <div class="container">
+                <h2>Education & Contact</h2>
+                <div class="edu-contact-grid">
+                    <div class="section-content fade-in">
+                        <h3>Education</h3>
+                        <p><strong>B.Tech in Artificial Intelligence and Data Science</strong></p>
+                        <p><strong>Ramakrishna Engineering College, [Your City]</strong></p>
+                        <p>Expected Graduation: 2025 | CGPA: [Your CGPA]</p>
+                    </div>
+                    <div class="section-content fade-in">
+                        <h3>Let's Connect</h3>
+                        <div class="contact-info">
+                            <p><i class="fas fa-envelope"></i> <a href="mailto:gdharani025@gmail.com">gdharani025@gmail.com</a></p>
+                            <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/dharani-govindharaj-8516a7383/" target="_blank">LinkedIn Profile</a></p>
+                            <p><i class="fab fa-github"></i> <a href="https://github.com/Dharani1-gg" target="_blank">GitHub Profile</a></p>
+                        </div>
+                        <br>
+                        <a href="[Link to your PDF CV]" class="btn" target="_blank">Download My CV</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dharani G. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/dharani-govindharaj-8516a7383/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Dharani1-gg" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#hero" id="back-to-top"><i class="fas fa-chevron-up"></i></a>
+
+    <script>
+        // --- Page Loader ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('page-loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500); // Match transition duration
+
+            // --- Hero Section On-Load Animations ---
+            const onLoadElements = document.querySelectorAll('.animate-on-load');
+            onLoadElements.forEach(el => {
+                setTimeout(() => {
+                    el.classList.add('show');
+                }, 100); // Small delay before starting
+            });
+        });
+
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const theme = body.getAttribute('data-theme');
+            if (theme === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // --- Mobile Menu Toggle ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // --- Fade In & Skill Bar Animation on Scroll ---
+        const faders = document.querySelectorAll('.fade-in');
+        const skillLevels = document.querySelectorAll('.skill-level');
+
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    // Animate fade-in elements
+                    if (entry.target.classList.contains('fade-in')) {
+                        entry.target.classList.add('visible');
+                    }
+                    // Animate skill bars
+                    if (entry.target.classList.contains('skill-category')) {
+                        const bars = entry.target.querySelectorAll('.skill-level');
+                        bars.forEach(bar => {
+                            const level = bar.getAttribute('data-level');
+                            bar.style.width = level + '%';
+                        });
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+        
+        // Observe skill categories to trigger bar animation
+        const skillCategories = document.querySelectorAll('.skill-category');
+        skillCategories.forEach(category => {
+            appearOnScroll.observe(category);
+        });
+
+
+        // --- Back to Top Button ---
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
